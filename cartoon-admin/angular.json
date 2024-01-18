@@ -4,6 +4,9 @@
   "newProjectRoot": "projects",
   "projects": {
     "cartoon-admin": {
+      "i18n": {
+
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {

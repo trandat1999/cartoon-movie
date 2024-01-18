@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'thd-login',
@@ -7,7 +8,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  constructor() {}
+  constructor(private authService: AuthService) {}
   ngOnInit(): void {
     this.formGroup = new FormGroup({
       username: new FormControl("",[Validators.required]),
@@ -17,9 +18,8 @@ export class LoginComponent implements OnInit {
   }
   formGroup : FormGroup;
   submitForm(): void {
-    if (this.formGroup.valid) {
-      console.log('submit', this.formGroup.value);
-    } else {
+    console.log(this.formGroup);
+    if (!this.formGroup.valid) {
       Object.values(this.formGroup.controls).forEach(control => {
         if (control.invalid) {
           control.markAsDirty();
@@ -27,5 +27,8 @@ export class LoginComponent implements OnInit {
         }
       });
     }
+    this.authService.login(this.formGroup.value).subscribe(body => {
+      console.log(body);
+    })
   }
 }
